@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  background:#0f172a;
+  color:white;
+  transition:0.3s;
+}
+
+body.light{
+  background:#f1f5f9;
+  color:#111;
+}
+
+/* NAVBAR */
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+  background:#1e293b;
+  position:sticky;
+  top:0;
+}
+
+nav h1{
+  color:#38bdf8;
+}
+
+.menu{
+  display:flex;
+  gap:20px;
+}
+
+.menu a{
+  color:white;
+  text-decoration:none;
+}
+
+.toggle{
+  cursor:pointer;
+}
+
+/* MOBILE MENU */
+.hamburger{
+  display:none;
+  cursor:pointer;
+}
+
+@media(max-width:768px){
+  .menu{
+    display:none;
+    flex-direction:column;
+    background:#1e293b;
+    position:absolute;
+    top:60px;
+    right:0;
+    padding:20px;
+  }
+
+  .menu.active{
+    display:flex;
+  }
+
+  .hamburger{
+    display:block;
+  }
+}
+
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 20px;
+}
+
+.hero img{
+  width:120px;
+  border-radius:50%;
+  margin-bottom:20px;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:10px 20px;
+  background:#38bdf8;
+  color:black;
+  border-radius:20px;
+  text-decoration:none;
+}
+
+/* SECTIONS */
+section{
+  padding:50px 20px;
+  max-width:900px;
+  margin:auto;
+}
+
+/* SKILLS */
+.skill{
+  margin:15px 0;
+}
+
+.bar{
+  height:10px;
+  background:#334155;
+  border-radius:10px;
+}
+
+.progress{
+  height:10px;
+  background:#38bdf8;
+  width:0;
+  border-radius:10px;
+}
+
+/* PROJECTS */
+.card{
+  background:#1e293b;
+  padding:20px;
+  margin:10px 0;
+  border-radius:10px;
+}
+
+/* SCROLL ANIMATION */
+.hidden{
+  opacity:0;
+  transform:translateY(40px);
+  transition:1s;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <h1>MyPortfolio</h1>
+
+  <div class="menu" id="menu">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <div>
+    <span class="toggle" onclick="toggleTheme()">🌙</span>
+    <span class="hamburger" onclick="toggleMenu()">☰</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="https://via.placeholder.com/120" alt="profile">
+  <h2>Your Name</h2>
+  <p>Web Developer | MERN Stack</p>
+
+  <a href="#" class="btn">Download CV</a>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="hidden">
+  <h2>About Me</h2>
+  <p>I am a passionate developer skilled in HTML, CSS, JavaScript, React, and backend technologies.</p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="hidden">
+  <h2>Skills</h2>
+
+  <div class="skill">
+    <p>HTML</p>
+    <div class="bar"><div class="progress" data-width="90%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>CSS</p>
+    <div class="bar"><div class="progress" data-width="85%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>JavaScript</p>
+    <div class="bar"><div class="progress" data-width="80%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>React</p>
+    <div class="bar"><div class="progress" data-width="75%"></div></div>
+  </div>
+
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="hidden">
+  <h2>Projects</h2>
+
+  <div class="card">Project 1 - Portfolio Website</div>
+  <div class="card">Project 2 - E-commerce Website</div>
+  <div class="card">Project 3 - Dashboard App</div>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="hidden">
+  <h2>Contact</h2>
+  <p>Email: your@email.com</p>
+</section>
+
+<script>
+
+/* DARK MODE */
+function toggleTheme(){
+  document.body.classList.toggle("light");
+}
+
+/* MOBILE MENU */
+function toggleMenu(){
+  document.getElementById("menu").classList.toggle("active");
+}
+
+/* SCROLL ANIMATION */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+
+      /* Animate skills */
+      if(entry.target.id === "skills"){
+        document.querySelectorAll(".progress").forEach(bar=>{
+          bar.style.width = bar.getAttribute("data-width");
+        });
+      }
+    }
+  });
+});
+
+document.querySelectorAll(".hidden").forEach(el => observer.observe(el));
+
+</script>
+
+</body>
+</html>
